@@ -10,7 +10,7 @@
 
 启动Thunder环境。用thunder提供的STAR_2_THU.py将刚刚复制的.star文件转为.thu格式。用法为：
 
-```python
+```shell
 python STAR_2_THU.py -i xxx.star -o xxx.thu
 ```
 
