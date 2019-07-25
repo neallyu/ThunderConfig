@@ -1,4 +1,4 @@
-# Manual of Thunder 3D Refinement
+# Configuration of Thunder 3D Refinement
 
 ## 1. Preparation
 
@@ -21,13 +21,13 @@ python STAR_2_THU.py -i xxx.star -o xxx.thu
 ```json
 "Basic" :
 {
-  "Number of Threads Per Process" : 24, // 并行进程数，mpirun -n <x>的参数，x=24+1=25
+  "Number of Threads Per Process" : , // 每一Process中的线程数
   "2D or 3D Mode" : "3D",
   "Global Search" : true,
   "Local Search" : true,
-  "CTF Search" : false,
+  "CTF Search" : false, //whether or not to refine defocus of each single particle
   "Number of Classes" : 1,
-  "Size of Image" : 256, // pixel?
+  "Size of Image" : 256, // pixel
   "Pixel Size (Angstrom)" : 1.77,
   "Radius of Mask on Images (Angstrom)" : 120, //Mask radius
   "Estimated Translation (Pixel)" : 10,
@@ -41,7 +41,7 @@ python STAR_2_THU.py -i xxx.star -o xxx.thu
   "Prefix of Output" : "",
   "Calculate FSC Using Core Region" : true,
   "Calculate FSC Using Masked Region" : false,
-  "Particle Grading" : false,
+  "Particle Grading" : false, //whether or not to use particle grading to weight the contribution of of each single particle image during reconstruction
   "Auto-Recentre Reference" : false
 }
 ```
@@ -57,4 +57,30 @@ mpirun -n 25 thunder_cpu 3D.json
 ```
 
 即可，Log文件在*Path of Output*设置的路径下，文件名为*thunder.log*
+
+mpirun的进程数最好为奇数，这样在减掉一个master进程后，分配给halfA和halfB的进程数保持一致，-n的参数最少为3
+
+在配置好CUDA和NCCL环境后，可以使用gpu计算模式，即
+
+```shell
+mpirun -n 5 thunder_gpu 3D.json
+```
+
+## 4. Mask Create
+
+Thunder的3D refinement会输出Reference_000_A_Final.mrc和Reference_000_B_Final.mrc文件
+
+```shell
+thunder_genmask -i Reference_000_A_Final.mrc -o mask.mrc --pixelsize 1.77 --threshold 0.005 --ext 0 --edgewidth 6 -j 8
+```
+
+其中pixelsize参数与json保持一致，j为进程数，输出mask.mrc文件
+
+## 5. Postprocess
+
+```shell
+thunder_postprocess --inputA Reference_000_A_Final.mrc --inputB Reference_000_B_Final.mrc --mask mask.mrc --pixelsize 1.77 -j 8
+```
+
+
 
