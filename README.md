@@ -18,30 +18,30 @@ python STAR_2_THU.py -i xxx.star -o xxx.thu
 
 其中Basic部分设置参考如下：
 
-```json
+```python
 "Basic" :
 {
-  "Number of Threads Per Process" : , // 每一Process中的线程数
+  "Number of Threads Per Process" : , # 每一Process中的线程数
   "2D or 3D Mode" : "3D",
   "Global Search" : true,
   "Local Search" : true,
-  "CTF Search" : false, //whether or not to refine defocus of each single particle
+  "CTF Search" : false, # whether or not to refine defocus of each single particle
   "Number of Classes" : 1,
-  "Size of Image" : 256, // pixel
+  "Size of Image" : 256, # pixel
   "Pixel Size (Angstrom)" : 1.77,
-  "Radius of Mask on Images (Angstrom)" : 120, //Mask radius
+  "Radius of Mask on Images (Angstrom)" : 120, #Mask radius
   "Estimated Translation (Pixel)" : 10,
   "Initial Resolution (Angstrom)" : 60,
   "Perform Global Search Under (Angstrom)" : 15,
   "Symmetry" : "D2",
-  "Initial Model" : "run_it300_class001.mrc", //设置为从InitialModel复制来的.mrc文件
-  ".thu File Storing Paths and CTFs of Images" : "run_it300_data.thu", //python输出的thu文件
-  "Path of Particles" : "../", //此项需查看star文件内_rlnImageName项的路径进行设置
-  "Path of Output" : "./", //数据输出路径
+  "Initial Model" : "run_it300_class001.mrc", # 设置为从InitialModel复制来的.mrc文件
+  ".thu File Storing Paths and CTFs of Images" : "run_it300_data.thu", # python输出的thu文件
+  "Path of Particles" : "../", # 此项需查看star文件内_rlnImageName项的路径进行设置
+  "Path of Output" : "./", # 数据输出路径
   "Prefix of Output" : "",
   "Calculate FSC Using Core Region" : true,
   "Calculate FSC Using Masked Region" : false,
-  "Particle Grading" : false, //whether or not to use particle grading to weight the contribution of of each single particle image during reconstruction
+  "Particle Grading" : false, # whether or not to use particle grading to weight the contribution of of each single particle image during reconstruction
   "Auto-Recentre Reference" : false
 }
 ```
